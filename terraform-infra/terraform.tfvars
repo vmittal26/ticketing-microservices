@@ -1,0 +1,8 @@
+location            = "West Europe"
+resource_group_name = "ticketing-rg"
+identity_nm         = "ticketing-identity"
+vault_name          = "ticketing-app-key-vault"
+secret_name         = "srv-bus-conn-str"
+db_secret_name      = "mongo-db-conn-str"
+aca_environment     = "test"
+app_auth            = "auth"
