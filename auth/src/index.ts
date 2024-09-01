@@ -52,10 +52,10 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
-    const mongo_db_connection_str = process.env.MONGO_DB_CONNECTION_STRING == null ? 
-                                      process.env['mongo-db-conn-str']: process.env.MONGO_DB_CONNECTION_STRING;
+    const mongo_db_connection_str =   process.env['mongo-db-conn-str'];
     
     console.log('Mongo db conn str',mongo_db_connection_str);
+    
     if (mongo_db_connection_str == null) {
       throw new Error('Mongo db instance env variable is missing');
     }

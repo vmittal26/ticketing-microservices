@@ -1,4 +1,4 @@
-resource "azurerm_container_app" "aca_auth_app" {
+resource "azurerm_container_app" "aca_app_auth" {
   name                         = var.app_auth
   container_app_environment_id = azurerm_container_app_environment.aca_environment.id
   resource_group_name          = var.resource_group_name
@@ -18,6 +18,11 @@ resource "azurerm_container_app" "aca_auth_app" {
         secret_name = var.db_secret_name
         value = "secretref:mongo-db-conn-str"
       }
+
+      env {
+        name = var.service_port_name
+        value = var.service_port
+      }
     }
   }
 
@@ -35,7 +40,7 @@ resource "azurerm_container_app" "aca_auth_app" {
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
-    target_port                = 5000
+    target_port                = var.service_port
     transport                  = "auto"
 
     traffic_weight {
@@ -49,8 +54,8 @@ resource "azurerm_container_app" "aca_auth_app" {
   }
 }
 
-output "app_url" {
-  value = azurerm_container_app.aca_auth_app.latest_revision_fqdn
+output "app_auth_url" {
+  value = azurerm_container_app.aca_app_auth.latest_revision_fqdn
 }
 
 

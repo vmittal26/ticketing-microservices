@@ -29,3 +29,20 @@ variable "app_auth" {
 variable "db_secret_name" {
   type = string
 }
+
+
+variable "service_port_name" {
+  type = string
+}
+
+variable "service_port" {
+  type = number
+}
+
+variable "app_ticket" {
+  type = string
+}
+
+variable "app_order" {
+  type = string
+}

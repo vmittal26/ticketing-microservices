@@ -2,8 +2,8 @@ import express, { Request, Response } from 'express';
 
 import * as ticketService from '../service/ticketService';
 import { BadRequestError, NotAuthorizedUser } from '@coretickets/modules';
-import { TicketUpdatedPublisher } from '../publisher/TicketUpdatedPublisher';
-import { natsWrapper } from '../nats-wrapper/NatsWrapper';
+// import { TicketUpdatedPublisher } from '../publisher/TicketUpdatedPublisher';
+// import { natsWrapper } from '../nats-wrapper/NatsWrapper';
 
 const router = express.Router();
 
@@ -26,13 +26,13 @@ router.put('/api/v1/tickets/:id', async (req: Request, res: Response) => {
 
   await ticket.save();
 
-  new TicketUpdatedPublisher(natsWrapper.client).publish({
-    version: ticket.version,
-    id: ticket.id,
-    title: ticket.title,
-    price: ticket.price,
-    userId: ticket.userId,
-  });
+  // new TicketUpdatedPublisher(natsWrapper.client).publish({
+  //   version: ticket.version,
+  //   id: ticket.id,
+  //   title: ticket.title,
+  //   price: ticket.price,
+  //   userId: ticket.userId,
+  // });
 
   res.status(201).send(ticket);
 });

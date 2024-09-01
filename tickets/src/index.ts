@@ -1,26 +1,21 @@
 import mongoose from 'mongoose';
 import { app } from './app';
-import { natsWrapper } from './nats-wrapper/NatsWrapper';
-import { OrderCreatedListener } from './listeners/OrderCreatedListener';
+// import { natsWrapper } from './nats-wrapper/NatsWrapper';
+// import { OrderCreatedListener } from './listeners/OrderCreatedListener';
 
 const start = async () => {
   try {
-    if (process.env.MONGO_DB_CONNECTION_STRING == null) {
+
+    const mongo_db_connection_str =   process.env['mongo-db-conn-str'];
+    
+    if (mongo_db_connection_str == null) {
       throw new Error('Mongo db instance env variable is missing');
     }
-    await natsWrapper.natsConnect();
-
-    process.on('SIGINT', () => {
-      natsWrapper.client.close();
-    });
-    process.on('SIGTERM', () => {
-      natsWrapper.client.close();
-    });
 
 
-    new OrderCreatedListener(natsWrapper.client).listen();
+    // new OrderCreatedListener(natsWrapper.client).listen();
 
-    await mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING);
+    await mongoose.connect(mongo_db_connection_str);
     console.log('connected successfully!');
 
     app.listen(process.env.PORT, () => {

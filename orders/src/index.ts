@@ -1,21 +1,22 @@
 import mongoose from 'mongoose';
 import { app } from './app';
-import { TicketCreatedListener } from './listeners/TicketCreatedListener';
-import { natsWrapper } from './nats-wrapper/NatsWrapper';
-import { TicketUpdatedListener } from './listeners/TicketUpdatedListeners';
+// import { TicketCreatedListener } from './listeners/TicketCreatedListener';
+// import { natsWrapper } from './nats-wrapper/NatsWrapper';
+// import { TicketUpdatedListener } from './listeners/TicketUpdatedListeners';
 
 const start = async () => {
   try {
-    if (process.env.MONGO_DB_CONNECTION_STRING == null) {
+    const mongo_db_connection_str =   process.env['mongo-db-conn-str'];
+    if (mongo_db_connection_str == null) {
       throw new Error('Mongo db instance env variable is missing');
     }
   
-    await natsWrapper.natsConnect();
+    // await natsWrapper.natsConnect();
 
-    new TicketCreatedListener(natsWrapper.client).listen();
-    new TicketUpdatedListener(natsWrapper.client).listen();
+    // new TicketCreatedListener(natsWrapper.client).listen();
+    // new TicketUpdatedListener(natsWrapper.client).listen();
 
-    await mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING);
+    await mongoose.connect(mongo_db_connection_str);
     console.log('connected successfully!');
 
     app.listen(process.env.PORT, () => {
